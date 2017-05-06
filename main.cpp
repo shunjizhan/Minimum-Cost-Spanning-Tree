@@ -23,12 +23,16 @@ int main() {
   }
 
   cin >> m;
-  for (int j = 0; j < m; j++) {
-    cin >> x >> y;
-    int index1 = atoi(x.c_str());
-    int index2 = atoi(y.c_str());
+  if (m != 0) {
+    for (int j = 0; j < m; j++) {
+      cin >> x >> y;
+      int index1 = atoi(x.c_str());
+      int index2 = atoi(y.c_str());
 
-    mcst.addEdge(index1, index2);
+      mcst.addEdge(index1, index2);
+    }
+  } else {
+    mcst.fullyConnected();
   }
 
   // mcst.printAllVertices();

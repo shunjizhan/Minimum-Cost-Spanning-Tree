@@ -87,6 +87,20 @@ public:
     vertices[i2].addEdge(i1, distance);
   }
 
+  void fullyConnected() {
+    for (int i = 0; i < n; i++) {
+      for (int j = 0; j < n; j++) {
+        if (i != j) {
+          Point p1 = vertices[i];
+          Point p2 = vertices[j];
+          double distance = getDistance(p1, p2);
+
+          vertices[i].addEdge(j, distance);
+        }
+      }
+    }
+  }
+
   void printAllVertices() {
     for (int i = 0; i < n; i++) {
       vertices[i].print();
