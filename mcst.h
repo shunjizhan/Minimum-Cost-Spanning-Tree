@@ -102,8 +102,8 @@ public:
   }
 
   void findMCST() {
-    int* chosedEdge;
-    vector<int*> result;
+    int** result = new int*[n-1];
+    int* edge;
 
     int v1, v2;
     double minDistance;
@@ -126,27 +126,34 @@ public:
         }
       }
 
-      chosedEdge = new int[2];
-      if (v1 < v2) {
-        chosedEdge[0] = v1;
-        chosedEdge[1] = v2;
-      } else {
-        chosedEdge[0] = v2;
-        chosedEdge[1] = v1;
-      }
-      result.push_back(chosedEdge);
-
       known.push_back(v2);
 
+      edge = new int[2];
+      if (v1 < v2) {
+        edge[0] = v1;
+        edge[1] = v2;
+      } else {
+        edge[0] = v2;
+        edge[1] = v1;
+      }
+      result[known.size() - 2] = edge;
     }
 
-    for (int x = 0; x < result.size(); x++) {
-      for (int y = 0; y < result.size(); y++) {
-        if (result[y][0] == x) {
-          cout << result[y][0] << " " << result[y][1] << endl;
+    // sort result
+    for (int y = 0; y < n - 1; y++) {
+      for (int x = y + 1; x < n - 1; x++) {
+        if (result[x][0] < result[y][0] || (result[x][0] == result[y][0] && result[x][1] < result[y][1])) {
+          int* temp = result[x];
+          result[x] = result[y];
+          result[y] = temp;
         }
       }
     }
+
+    for (int a = 0; a < n - 1; a++) {
+      cout << result[a][0] << " " << result[a][1] << endl;
+    }
+
 
   }
 
