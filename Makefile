@@ -11,7 +11,7 @@ run: Main.o
 
 test: Main.o
 	${CXX} Main.o -o mcst
-	./mcst < tests/test1
+	./mcst < tests/test0
 
 clean:
 	/bin/rm -f *.o mcst

@@ -1,11 +1,33 @@
 #include <string>
 #include <stdlib.h>     /* atof */
 #include <cmath>
+#include <vector>
 using namespace std;
+
+struct Edge {
+  int targetIndex;
+  double distance;
+
+  Edge() {
+    this->targetIndex = -1;
+    this->distance = -1;
+  }
+
+  Edge(int i, double distance) {
+    this->targetIndex = i;
+    this->distance = distance;
+  }
+
+  void print() {
+    cout << distance << " to " << targetIndex << endl;
+  }
+
+};
 
 struct Point {
   double x;
   double y;
+  vector<Edge> edges;
 
   Point() {
     this->x = 0;
@@ -17,40 +39,23 @@ struct Point {
     this->y = y;
   }
 
+  void addEdge(int i, double distance) {
+    edges.push_back(Edge(i ,distance));
+  }
+
   void print() {
     cout << x << " " << y << endl;
+    for (int i = 0; i < edges.size(); i++)
+      edges[i].print();
   }
 
 };
 
 double getDistance(Point p1, Point p2) {
-  return sqrt(abs(p1.x - p2.x) + abs(p1.y - p2.y));
+  double d1 = abs(p1.x - p2.x);
+  double d2 = abs(p1.y - p2.y);
+  return sqrt(d1 * d1 + d2 * d2);
 }
-
-struct Edge {
-  Point p1;
-  Point p2;
-  double distance;
-
-  Edge() {
-    this->p1 = Point(0, 0);
-    this->p2 = Point(0, 0);
-    this->distance = getDistance(p1, p2);
-  }
-
-  Edge(Point p1, Point p2) {
-    this->p1 = p1;
-    this->p2 = p2;
-    this->distance = getDistance(p1, p2);
-  }
-
-  void print() {
-    p1.print();
-    p2.print();
-    cout << "distance = " << distance << endl;
-  }
-
-};
 
 class Mcst {
 public:
@@ -67,33 +72,27 @@ public:
     this->edges = new Edge[m];
   }
 
-  void startAddingEdges(int m) {
-    this->m = m;
-    this->current = 0;
-  }
-
   void addVertice(double x, double y) {
     vertices[current] = Point(x, y);
     current++;
   }
 
-  void addVertice(Point p1, Point p2) {
-    edges[current] = Edge(p1, p2);
-    current++;
+  void addEdge(int i1, int i2) {
+    Point p1 = vertices[i1];
+    Point p2 = vertices[i2];
+    double distance = getDistance(p1, p2);
+
+    vertices[i1].addEdge(i2, distance);
+    vertices[i2].addEdge(i1, distance);
   }
 
   void printAllVertices() {
     for (int i = 0; i < n; i++) {
       vertices[i].print();
-    }
-  }
-
-  void printAllEdges() {
-    for (int i = 0; i < m; i++) {
-      edges[i].print();
       cout << endl;
     }
   }
+
 };
 
 

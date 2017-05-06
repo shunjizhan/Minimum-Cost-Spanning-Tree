@@ -22,19 +22,16 @@ int main() {
     mcst.addVertice(intX, intY);
   }
 
-  // cin >> m;
-  // mcst.startAddingEdges(m)
+  cin >> m;
+  for (int j = 0; j < m; j++) {
+    cin >> x >> y;
+    int index1 = atoi(x.c_str());
+    int index2 = atoi(y.c_str());
 
-  // for (i = 0; i < m; i++) {
-  //   cin >> x >> y;
-  //   intX = atof(x.c_str());
-  //   intY = atof(y.c_str());
-
-  //   mcst.addVertice(intX, intY)
-  // }
+    mcst.addEdge(index1, index2);
+  }
 
   mcst.printAllVertices();
-
 
   return 0;
 }
