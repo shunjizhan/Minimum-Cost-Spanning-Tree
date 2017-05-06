@@ -2,6 +2,7 @@
 #include <stdlib.h>     /* atof */
 #include <cmath>
 #include <vector>
+#include <algorithm>
 using namespace std;
 
 struct Edge {
@@ -54,7 +55,7 @@ struct Point {
 double getDistance(Point p1, Point p2) {
   double d1 = abs(p1.x - p2.x);
   double d2 = abs(p1.y - p2.y);
-  return sqrt(d1 * d1 + d2 * d2);
+  return sqrt((d1 * d1) + (d2 * d2));
 }
 
 class Mcst {
@@ -90,6 +91,43 @@ public:
     for (int i = 0; i < n; i++) {
       vertices[i].print();
       cout << endl;
+    }
+  }
+
+  bool contains(vector<int> v, int x) {
+    if (std::find(v.begin(), v.end(), x) != v.end())
+      return true;
+    else
+      return false;
+  }
+
+  void findMCST() {
+    int v1, v2;
+    double minDistance;
+    vector<int> known;
+    known.push_back(0);
+
+    while (known.size() < n) {
+      minDistance = 999999999999999999;
+      for (int i = 0; i < known.size(); i++) {    // all known points
+        int thisIndex = known[i];
+        vector<Edge> edges = vertices[thisIndex].edges;
+        for (int j = 0; j < edges.size(); j++) {    // all edges for current point
+          double distance = edges[j].distance;
+          int targetIndex = edges[j].targetIndex;
+          if (distance < minDistance && !contains(known, targetIndex)) {
+            minDistance = distance;
+            v1 = thisIndex;
+            v2 = targetIndex;
+          }
+        }
+      }
+
+      if (known.size() != 1) { cout << endl;}
+      cout << v1 << " " << v2;
+
+      known.push_back(v2);
+
     }
   }
 

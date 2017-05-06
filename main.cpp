@@ -31,7 +31,8 @@ int main() {
     mcst.addEdge(index1, index2);
   }
 
-  mcst.printAllVertices();
+  // mcst.printAllVertices();
+  mcst.findMCST();
 
   return 0;
 }
