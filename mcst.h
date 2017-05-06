@@ -65,12 +65,18 @@ public:
   int current;  // current index to add
   Point* vertices;
   Edge* edges;
+  bool* connect;
 
   Mcst(int n) {
     this->n = n;
     this->current = 0;
     this->vertices = new Point[n];
+    this->connect = new bool[n];
     this->edges = new Edge[m];
+
+    for (int i = 0; i < n; i++) {
+      connect[i] = false;
+    }
   }
 
   void addVertice(double x, double y) {
@@ -85,6 +91,9 @@ public:
 
     vertices[i1].addEdge(i2, distance);
     vertices[i2].addEdge(i1, distance);
+
+    connect[i1] = true;
+    connect[i2] = true;
   }
 
   void fullyConnected() {
@@ -99,6 +108,19 @@ public:
         }
       }
     }
+    for (int k = 0; k < n; k++) {
+      connect[k] = true;
+    }
+  }
+
+  bool isConnect() {
+    for (int i = 0; i < n; i++) {
+      if (connect[i] == false) {
+        cout << "error! graph not connect!" << endl;
+        return false;
+      }
+    }
+    return true;
   }
 
   void printAllVertices() {
@@ -167,7 +189,6 @@ public:
     for (int a = 0; a < n - 1; a++) {
       cout << result[a][0] << " " << result[a][1] << endl;
     }
-
 
   }
 

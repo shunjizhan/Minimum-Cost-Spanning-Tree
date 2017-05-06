@@ -35,7 +35,10 @@ int main() {
     mcst.fullyConnected();
   }
 
-  // mcst.printAllVertices();
+  if (mcst.isConnect() == false) {
+    exit (EXIT_FAILURE);
+  }
+
   mcst.findMCST();
 
   return 0;
