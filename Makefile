@@ -1,5 +1,7 @@
 CXX=clang++
 # CXX=g++
+Main.o: Main.cpp
+	${CXX} -c Main.cpp
 
 all:
 	$(MAKE) clean
@@ -32,5 +34,3 @@ test5: Main.o
 clean:
 	/bin/rm -f *.o mcst
 
-Main.o: Main.cpp
-	${CXX} -c Main.cpp
